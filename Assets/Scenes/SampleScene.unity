@@ -840,7 +840,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1772,7 +1772,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1994,6 +1994,7 @@ GameObject:
   - component: {fileID: 2058265933}
   - component: {fileID: 2058265934}
   - component: {fileID: 2058265935}
+  - component: {fileID: 2058265936}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2159,6 +2160,27 @@ MonoBehaviour:
   enemyTag: Enemy
   ball: {fileID: 2912081759243125632, guid: ee22b0a014fa649d39e0764df25fcd1e, type: 3}
   offset_y: 0
+--- !u!65 &2058265936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058265927}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2106500338
 GameObject:
   m_ObjectHideFlags: 0

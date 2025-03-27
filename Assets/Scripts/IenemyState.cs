@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Interface con los métodos obligatorios que tienen que usarse cada vez que se cree un enemigo.
-public interface IenemyState 
+public interface IenemyState
 {
     void UpdateState();
     void GoToAttackState();

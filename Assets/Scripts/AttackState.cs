@@ -13,6 +13,9 @@ public class AttackState : IenemyState
     public GameObject ball;
     public float offset_y = 0;
 
+    public float bulletSpeed = 10f;
+    public string enemyTag = "Player";
+
 
     public AttackState(EnemyAI enemy)
     {
@@ -68,25 +71,43 @@ public class AttackState : IenemyState
             actualTimeBetweenShoots = 0;
             Vector3 lookDirection = col.transform.position - myEnemy.transform.position;
             myEnemy.transform.rotation = Quaternion.FromToRotation(Vector3.forward, lookDirection);
-            RaycastHit rayHit = new RaycastHit();
-            Ray ray = new Ray(myEnemy.transform.position, col.transform.position - myEnemy.transform.position);
-            if (Physics.Raycast(ray, out rayHit, 20f))
+
+            Transform closestEnemy = FindClosestEnemy();
+            if (closestEnemy == null) return; // No enemies to shoot at
+
+            // Spawn the bullet at the player's position
+            enemyPosition = myEnemy.transform.position;
+            enemyRotation = col.transform.rotation;
+            enemytransform = col.transform;
+            GameObject bullet = GameObject.Instantiate(ball, new Vector3(enemyPosition.x, enemyPosition.y + offset_y, enemyPosition.z), enemyRotation);
+
+            bullet.AddComponent<EnemyBullet>();
+
+            // Get Rigidbody and set the bullet's velocity to move towards the enemy
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
+            Vector3 direction = (closestEnemy.position - myEnemy.transform.position).normalized; // Direction towards the enemy
+            rb.velocity = direction * bulletSpeed;
+        }
+    }
+
+    Transform FindClosestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        Transform closest = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = myEnemy.transform.position;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(currentPosition, enemy.transform.position);
+            if (distance < closestDistance)
             {
-                if (rayHit.transform.tag == "Player")
-                {
-                    //GENERA EL SHOOT
-                    enemyPosition = myEnemy.transform.position;
-                    enemyRotation = col.transform.rotation;
-                    enemytransform = col.transform;
-                    // GameObject.Find("EnemyShoots").GetComponent<AudioSource>().Play();
-                    GameObject go = GameObject.Instantiate(ball, new Vector3(enemyPosition.x, enemyPosition.y + offset_y, enemyPosition.z), enemyRotation);
-
-                    go.AddComponent<EnemyBullet>();
-
-                    go.GetComponent<Rigidbody>().velocity = myEnemy.transform.forward * 20;
-                }
+                closestDistance = distance;
+                closest = enemy.transform;
             }
         }
+
+        return closest;
     }
 
 }

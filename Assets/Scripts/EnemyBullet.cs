@@ -8,13 +8,20 @@ public class EnemyBullet : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHealth player = other.GetComponent<PlayerHealth>();
-            if (player != null)
+            BoxCollider boxCollider = other.GetComponent<BoxCollider>();
+
+            // Only proceed if this is the BoxCollider (not SphereCollider)
+            if (boxCollider != null)
             {
-                player.TakeDamage(damage);
-                Debug.Log($"Player hit! Health left: {player.currentHealth}");
+                Debug.Log("PlayerDetected");
+                PlayerHealth player = other.GetComponent<PlayerHealth>();
+                if (player != null)
+                {
+                    player.TakeDamage(damage);
+                    Debug.Log($"Player hit! Health left: {player.currentHealth}");
+                    Destroy(gameObject);
+                }
             }
-            Destroy(gameObject);
         }
     }
 }
